@@ -1,7 +1,8 @@
 import express from "express";
 import morgan from "morgan";
 import helmet from "helmet";
-import cookieparser from "cookie-parser"
+import cookieparser from "cookie-parser";
+// import redis from "ioredis";
 
 import logger from "./utils/logger.js";
 
@@ -11,7 +12,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(helmet());
-app.use(cookieparser())
+app.use(cookieparser());
 
 // Morgan stream → Winston
 const morganStream = {
@@ -23,10 +24,12 @@ const morganStream = {
 app.use(morgan("combined", { stream: morganStream }));
 
 //route import
-import userRoute from "./routes/user.routes.js"
-import productRoute from "./routes/product.routes.js"
+import userRoute from "./routes/user.routes.js";
+import productRoute from "./routes/product.routes.js";
 
-app.use("/api/v1/auth", userRoute )
-app.use("/api/v1/products", productRoute )
+// const redisClient = new redis(process.env.REDIS_URL);
+
+app.use("/api/v1/auth", userRoute);
+app.use("/api/v1/products", productRoute);
 
 export default app;
