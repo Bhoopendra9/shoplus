@@ -19,7 +19,10 @@ export const createOrder = asyncHandler(async (req, res) => {
 
   if (!orderItems || !Array.isArray(orderItems) || orderItems.length === 0) {
     logger.error("Order creation failed: orderItems missing");
-    throw new ApiError(400, "orderItems is required and should be a non-empty array");
+    throw new ApiError(
+      400,
+      "orderItems is required and should be a non-empty array",
+    );
   }
 
   const newOrder = await Order.create({
@@ -39,9 +42,9 @@ export const createOrder = asyncHandler(async (req, res) => {
     throw new ApiError(500, "Failed to create order");
   }
 
-  return res.status(201).json(
-    ApiResponse.success(201, "Order created successfully", newOrder),
-  );
+  return res
+    .status(201)
+    .json(ApiResponse.success(201, "Order created successfully", newOrder));
 });
 
 // Get single order by id
